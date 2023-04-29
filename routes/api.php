@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BannerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,7 @@ Route::group(['middleware' => ['cors']], function () {
     Route::group(['prefix' => 'v1'], function () {
         Route::post('register', [AuthController::class, 'register']);
         Route::post('login', [AuthController::class, 'login']);
+        Route::get('banner', [BannerController::class, 'index']);
         Route::group(['middleware' => ['auth:member']], function () {
             Route::post('logout', [AuthController::class, 'logout']);
         });
