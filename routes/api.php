@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\DatasetController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +25,19 @@ Route::group(['middleware' => ['cors']], function () {
         Route::get('banner', [BannerController::class, 'index']);
         Route::group(['middleware' => ['auth:member']], function () {
             Route::post('logout', [AuthController::class, 'logout']);
+            Route::get('member', [AuthController::class, 'profile']);
+            Route::group(['prefix' => 'transaction'], function () {
+                Route::get('', [TransactionController::class, 'index']);
+                Route::post('deposit', [TransactionController::class, 'deposit']);
+                Route::post('instant-deposit', [TransactionController::class, 'instanDeposit']);
+                Route::post('withdraw', [TransactionController::class, 'withdraw']);
+            });
+
+            Route::group(['prefix' => 'dataset'], function () {
+                Route::get('admin-bank', [DatasetController::class, 'adminBank']);
+                Route::get('payment-type', [DatasetController::class, 'paymentType']);
+                Route::get('user-bank', [DatasetController::class, 'userBank']);
+            });
         });
     });
 });

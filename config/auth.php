@@ -42,7 +42,7 @@ return [
         ],
         'member' => [
             'driver'        => 'sanctum',
-            'provider'      => 'users',
+            'provider'      => 'member',
         ],
     ],
 
@@ -68,7 +68,7 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-        'users' => [
+        'member' => [
             'driver' => 'eloquent',
             'model' => App\Models\Member::class,
         ],

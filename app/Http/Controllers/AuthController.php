@@ -88,4 +88,10 @@ class AuthController extends BaseController
         $request->user()->currentAccessToken()->delete();
         return $this->sendResponse(null, 'Successfully Logout');
     }
+    
+    public function profile()
+    {
+        $member = Member::find(Auth::user()->id);
+        return $this->sendResponse($member, 'Fetched');
+    }
 }
