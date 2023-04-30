@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\DatasetController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,11 +33,16 @@ Route::group(['middleware' => ['cors']], function () {
                 Route::post('instant-deposit', [TransactionController::class, 'instanDeposit']);
                 Route::post('withdraw', [TransactionController::class, 'withdraw']);
             });
+            Route::group(['prefix' => 'bank'], function() {
+                Route::get('', [MemberController::class, 'memberBank']);
+                Route::post('', [MemberController::class, 'add']);
+            });
 
             Route::group(['prefix' => 'dataset'], function () {
                 Route::get('admin-bank', [DatasetController::class, 'adminBank']);
                 Route::get('payment-type', [DatasetController::class, 'paymentType']);
                 Route::get('user-bank', [DatasetController::class, 'userBank']);
+                Route::get('bank', [DatasetController::class, 'getBankPayment']);
             });
         });
     });

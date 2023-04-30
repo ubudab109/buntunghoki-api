@@ -38,6 +38,16 @@ class DatasetController extends BaseController
         return $this->sendResponse($data, 'Fetched Successfully');
     }
 
+    public function getBankPayment(Request $request)
+    {
+        $data = DB::table('bank_payments')
+        ->when($request->has('payment_type') && $request->payment_type != null, function ($query) use ($request) {
+            $query->where('payment_type_id', $request->payment_type);
+        })
+        ->get();
+        return $this->sendResponse($data, 'Fetched');
+    }
+
     public function userBank(Request $request)
     {
         $userBank = DB::table('member_banks')
