@@ -203,4 +203,19 @@ class TransactionController extends BaseController
             return $this->sendError(array('success' => 0), 'Internal Server Error');
         }
     }
+
+    public function lastTransaction()
+    {
+        $data = DB::table('transaction')
+                ->where('transaction.member_id', Auth::user()->id)
+                ->select('transaction.*', 'mb.account_name as account_name', 'mb.account_number as account_number', 'mbp.name as member_bank_name')
+                ->where('type', 'withdraw')
+                ->where('transaction.member_id', Auth::user()->id)
+                ->join('member_banks as mb', 'transaction.member_bank_id', 'mb.id')
+                ->leftJoin('bank_payments as mbp', 'mb.bank_payment_id', 'mbp.id')
+                ->orderBy('id', 'desc')
+                ->limit(5)
+                ->get();
+        return $this->sendResponse($data, 'fetched');
+    }
 }

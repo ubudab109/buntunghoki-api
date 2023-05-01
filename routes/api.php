@@ -32,6 +32,7 @@ Route::group(['middleware' => ['cors']], function () {
                 Route::post('deposit', [TransactionController::class, 'deposit']);
                 Route::post('instant-deposit', [TransactionController::class, 'instanDeposit']);
                 Route::post('withdraw', [TransactionController::class, 'withdraw']);
+                Route::get('last-transaction', [TransactionController::class, 'lastTransaction']);
             });
             Route::group(['prefix' => 'bank'], function() {
                 Route::get('', [MemberController::class, 'memberBank']);
